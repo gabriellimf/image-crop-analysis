@@ -22,7 +22,7 @@ from tempfile import NamedTemporaryFile
 from PIL import Image
 
 from pathlib import Path
-from image_manipulation import generate_crop, CropRectangle  
+from crop_api import generate_crop, CropRectangle
 
 def join_images(
     images, col_wrap=0, bgcolor=(255, 255, 255, 0), img_size=None, padding=0
