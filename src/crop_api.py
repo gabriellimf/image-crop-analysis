@@ -357,3 +357,24 @@ class ImageSaliencyModel(object):
             print(fp.name)
             img.save(fp, img_format)
             self.plot_img_crops(Path(fp.name), **kwargs)
+
+    def save_crops(self, img_path: Path, output_dir: Path, prefix="crop"):
+        """Gera e salva os crops como arquivos de imagem.
+
+        Args:
+            img_path: caminho da imagem original
+            output_dir: diretório para salvar os crops
+            prefix: prefixo para os arquivos
+        """
+        output = self.get_output(img_path)
+        crops = output["crops"]
+        img = Image.open(str(img_path))
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        for i, rect in enumerate(crops):
+            left, top, width, height = rect
+            box = (left, top, left + width, top + height)
+            cropped = img.crop(box)
+            crop_path = output_dir / f"{prefix}_{i}.jpg"
+            cropped.save(crop_path)
+        
